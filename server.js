@@ -45,6 +45,7 @@ const PORT = process.env.PORT || 3001;
 // Brings in books.js module
 const BookModel = require('./models/books');
 const seed = require('./modules/seed');
+const { response } = require('express');
 
 // *-------------------------------------------*
 
@@ -71,6 +72,7 @@ app.get('/test', (request, response) => {
 app.get('/books', async (request, response) => {
   try {
     const token = request.headers.authorization.split(' ')[1];
+    const email = request.query.email;
     // STEP 2. use the jsonwebtoken library to verify that it is a valid jwt
     // jsonwebtoken doc - https://www.npmjs.com/package/jsonwebtoken
     jwt.verify(token, getKey, {}, function (error, user) {
@@ -79,7 +81,7 @@ app.get('/books', async (request, response) => {
       }
       // Read data (C READ U D)
       // gets information from database
-      BookModel.find({}, (error, booksData) => {
+      BookModel.find({ email }, (error, booksData) => {
         response.status(200).send(booksData);
       });
     });
@@ -87,6 +89,48 @@ app.get('/books', async (request, response) => {
   catch (error) {
     response.status(500).send('Database Error');
   }
+});
+
+//*-------------------------------------------*
+
+// 13:1:1
+app.post('/post-books', (request, response) => {
+  // Tests post route
+  // response.send('Post route');
+  // try catch error handling 13:1:4
+  try {
+    let { title, description, status, email } = request.body;
+    // object literal from 13:1:2
+    // let objLiteral = {title, description, status, email};
+    //creates and saves new book to db 13:1:3
+    let newBook = new BookModel({ title, description, status, email });
+    newBook.save();
+    response.send(newBook);
+    // 13:2:7
+    // console.log(`New book added`, newBook);
+  }
+  catch (error) {
+    response.status(500).send('Error: Book not posted');
+  }
+});
+
+//*-------------------------------------------*
+
+// Lab 13:2:1 + 13:2:2
+app.delete('/delete-books/:id', (request, response) => {
+  const token = request.headers.authorization.split(' ')[1];
+  jwt.verify(token, getKey, {}, function (error, user) {
+    if (error) {
+      response.status(500).send('Invalid Token');
+    }
+    let myId = request.params.id;
+    let email = request.query.email;
+    if (email === user.email) {
+      BookModel.findByIdAndDelete(myId, (error, success) => {
+        response.send(`Deleted`);
+      });
+    }
+  });
 });
 
 //*-------------------------------------------*

@@ -15,7 +15,7 @@ async function seed(request, response) {
       title: 'Title of the book',
       description: 'description of the book',
       status: '200',
-      email: 'email@email',
+      email: 'clarissapamonicutt@gmail.com',
     });
     await addBook({
       title: 'Title of the book2',

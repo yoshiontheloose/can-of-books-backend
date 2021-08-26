@@ -130,27 +130,43 @@ Actual time needed to complete: 6 hours
 
 ---
 
-Name of feature: Lab 12
+Name of feature: Lab 12  
+Now that your app supports authenticated users, you can work towards implementing full CRUD for each user's set of books they want to show off.  
+Show off those books on the shelf!  
+Update your front-end React code to fetch the signed-in user's personal book list, and show it with component architecture.  
 
 Estimate of time needed to complete: 4 hours
 
 Start time: 8/18 1 hour
 
-Finish time: _____
+Finish time: 8/19
 
-Actual time needed to complete: _____
+Actual time needed to complete: 6 Hours
 
 ![Lab 12 UML](assets/Lab12_UML.jpg)
 
 ---
 
-Name of feature: Lab 13
+Name of feature: Lab 13  
 Today you will add the functionality for the user to add a book or delete a book. A book will be created with a form in React, and sent to the server where it will be saved into the database, and then returned to the front end to be displayed in the list of favorite books. You will then be able to delete that book with a click of a button, to have it instantly removed from the front end, and a request sent to back end for removal.
 
 Estimate of time needed to complete: 4 hours
 
-Start time: 8/21 
+Start time: 8/21
 
 Finish time: 8/22
 
 Actual time needed to complete: 6 hours
+
+---
+
+Name of feature: Lab 14  
+Complete another full-stack feature in your application so book information can be edited. Make changes to the front-end and back-end code.
+
+Estimate of time needed to complete: 3 hours
+
+Start time:  8/24 1 hour 8/25 2 hours
+
+Finish time: 8/25
+
+Actual time needed to complete: 3 Hours

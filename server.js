@@ -32,7 +32,7 @@ db.once('open', function () {
   console.log('Mongoose is connected')
 });
 
-//*---------------------
+// *-------------------------------------------*
 
 const app = express();
 app.use(cors());
@@ -45,7 +45,7 @@ const PORT = process.env.PORT || 3001;
 // Brings in books.js module
 const BookModel = require('./models/books');
 const seed = require('./modules/seed');
-const { response } = require('express');
+const { response, request } = require('express');
 
 // *-------------------------------------------*
 
@@ -135,6 +135,23 @@ app.delete('/delete-books/:id', (request, response) => {
 
 //*-------------------------------------------*
 
+// lab 14
+// query parameter for books route will need new jwt
+app.put('/put-books/:id', async (request, response) => {
+  try {
+    let myId = request.params.id;
+    let {title, description, status, email} = request.body;
+    const updatedBook = await BookModel.findByIdAndUpdate(myId, {title, description, status, email}, {new: true, overwrite: true});
+    
+    response.status(200).send(updatedBook);
+  }
+  catch(error) {
+    response.status(500).send('Unable to update database', error);
+  }
+});
+
+// *-------------------------------------------*
+
 // Seed database
 app.get('/seed', seed);
 
@@ -154,7 +171,4 @@ app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 //NOTE: jwks stands for JSON Web Key Set
 
-//NOTE: beware jwt verify token error. Do console logs
-// Notes to ask Mark
-// How did youfigure out the seed status numbers
 
